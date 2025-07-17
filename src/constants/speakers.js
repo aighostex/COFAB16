@@ -2,6 +2,8 @@ import koye from '/src/assets/mrkoye1.png';
 import tayo from '/src/assets/mrtayo.jpeg'
 import tobe from '/src/assets/mrtobe.jpeg'
 import mary from '/src/assets/mrsmary1.png'
+import mide from '/src/assets/mrolumide.png'
+
 
 
 export const speakers = [
@@ -21,7 +23,7 @@ export const speakers = [
     {
       name: "Olumide Ogunade (ID'Cabasa)",
       title: "Founder Coded Tunes",
-      image: "/images/id-cabasa.jpg",
+      image: mide,
       CEO: false,
     },
     {
