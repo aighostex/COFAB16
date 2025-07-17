@@ -2,7 +2,7 @@ import koye from '/src/assets/mrkoye1.png';
 import tayo from '/src/assets/mrtayo.jpeg'
 import tobe from '/src/assets/mrtobe.jpeg'
 import mary from '/src/assets/mrsmary1.png'
-import mide from '/src/assets/mrolumide.png'
+import mide from '/src/assets/mrolumide1.jpeg'
 
 
 
