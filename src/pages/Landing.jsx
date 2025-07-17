@@ -1,9 +1,13 @@
 import SpeakerCard from '../components/SpeakerCard';
 import { speakers } from '../constants/speakers';
+import { Link } from 'react-router-dom';
 
 const Landing = () => {
+    // function classNames (...classes){
+    //     return classes.filter(Boolean).join(" ");
+    // }
   return (
-    <div className="container mx-auto px-4 py-12 mt-8">
+    <div className="container mx-auto px-4 py-12 mt-8 flex flex-col">
       <section className="text-center mb-16">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
           CONFERENCE OF FAITHFUL AMBASSADORS
@@ -22,12 +26,12 @@ const Landing = () => {
           </div>
         </div>
         {/* Register Section */}
-        <a 
-          href="/register" 
-          className="bg-indigo-600 text-white px-8 py-3 rounded-md font-bold text-lg hover:bg-indigo-700 transition-colors inline-block"
+        <Link 
+          to="/register" 
+          className="hover:bg-[#ad3435] border-2 text-[#ad3435] hover:text-white px-8 py-3 rounded-md font-bold text-lg transition-colors inline-block"
         >
           REGISTER NOW
-        </a>
+        </Link>
       </section>
 
       <section className="mb-16">
@@ -42,14 +46,33 @@ const Landing = () => {
         </div>
       </section>
     {/* featured speakers */}
-      <section className="mb-16">
-        <h3 className="text-2xl font-bold mb-8 text-center">Featured Speakers</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {speakers.map((speaker, index) => (
-            <SpeakerCard key={index} speaker={speaker} />
-          ))}
+
+    <section className="mb-16">
+        <h3 className="text-2xl font-bold mb-12 text-center">Featured Speakers</h3>
+
+        {/* CEO Speaker(s) */}
+        <div className="flex justify-center items-center mb-10 w-full">
+            {speakers
+                .filter((speaker) => speaker.CEO)
+                .map((speaker, index) => (
+                <div key={index} className="flex justify-center">
+                    <SpeakerCard speaker={speaker} />
+                </div>
+            ))}
         </div>
-      </section>
+
+        {/* Non-CEO Speakers */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-4xl mx-auto">
+            {speakers
+                .filter((speaker) => !speaker.CEO)
+                .map((speaker, index) => (
+                    <div key={index}>
+                        <SpeakerCard speaker={speaker} />
+                    </div>
+            ))}
+        </div>
+    </section>
+
     </div>
   );
 };

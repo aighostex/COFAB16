@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+// import axios from 'axios';
 
 const AdminLogin = () => {
   const [password, setPassword] = useState('');
@@ -8,6 +9,7 @@ const AdminLogin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError('');
     if (password === 'admin123') {
       localStorage.setItem('adminAuth', password);
       navigate('/dashboard');

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+// import axios from 'axios';
 
 const Dashboard = () => {
   const [registrations, setRegistrations] = useState([]);
@@ -40,7 +41,8 @@ const Dashboard = () => {
       return;
     }
 
-    const fetchData = () => {
+    const fetchData  = async () => {
+        setIsLoading(true);
       try {
         const data = JSON.parse(localStorage.getItem('conferenceRegistrations') || '[]');
         setRegistrations(data);

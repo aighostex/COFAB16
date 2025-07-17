@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from 'axios';
 // import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
@@ -44,28 +45,37 @@ const Register = () => {
     
     try {
       // Generate referral code for new user
-      const referralCode = generateReferralCode();
+      const referralCode = formData.referralCode || generateReferralCode();
       setGeneratedReferralCode(referralCode);
 
        // Create the new registration object
       const newRegistration = {
         ...formData,
+        referralCode,
         id: Date.now(),
         registeredAt: new Date().toISOString(),
-        referralCode: formData.referralCode || referralCode,
+        // referralCode: formData.referralCode || referralCode,
         referredBy: formData.referralCode ? findReferrer(formData.referralCode) : null,
         isAdmin: false
       };
 
+
+      //send registration data to backend
+      await axios.post('api/registration', newRegistration);
+
+      setShowSuccess(true);
       // Save registration data
       const registrations = JSON.parse(localStorage.getItem('conferenceRegistrations') || '[]');
       registrations.push(newRegistration); // Now properly using newRegistration
       localStorage.setItem('conferenceRegistrations', JSON.stringify(registrations));
       
-      // Show success modal
-      setShowSuccess(true);
-    } catch{
-      setError('Registration failed. Please try again.');
+      
+    } catch (err) {
+      setError(
+        err.response && err.response.data && err.response.data.message 
+        ? err.response.data.message 
+        : 'Registration failed. Please try again.'
+      );
     } finally {
       setIsSubmitting(false);
     }
