@@ -1,8 +1,12 @@
+import koye from '/src/assets/koye.jpg';
+
+
+
 export const speakers = [
     {
       name: "Oluwakoyejo Oluwatosin",
       title: "CEO - Chronicles Software | Convener The CONFAB",
-      image: "/images/oluwatosin.jpg",
+      image: koye,
       CEO: true,
     },
 
