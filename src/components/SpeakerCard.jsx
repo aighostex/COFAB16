@@ -3,7 +3,7 @@ const SpeakerCard = ({ speaker }) => {
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
       <div className="h-48 bg-white flex items-center justify-center">
         {speaker.image ? (
-          <img src={speaker.image} alt={speaker.name} className="flex justify-center items-center rounded-full text-center w-50 h-50 mb-5 mt-12 bg-amber-950" />
+          <img src={speaker.image} alt={speaker.name} className="flex justify-center items-center rounded-full text-center w-55 h-55 mb-5 mt-12 bg-amber-950" />
         ) : (
           <span className="text-gray-500">Speaker Image</span>
         )}

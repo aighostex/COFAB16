@@ -1,5 +1,7 @@
-import koye from '/src/assets/koye.jpg';
-
+import koye from '/src/assets/mrkoye1.png';
+import tayo from '/src/assets/mrtayo.jpeg'
+import tobe from '/src/assets/mrtobe.jpeg'
+import mary from '/src/assets/mrsmary1.png'
 
 
 export const speakers = [
@@ -13,7 +15,7 @@ export const speakers = [
     {
       name: "Tayo Osiyemi",
       title: "Executive Director SKLD Integrated Services",
-      image: "/images/tayo-osiyemi.jpg",
+      image: tayo,
       CEO: false,
     },
     {
@@ -25,13 +27,13 @@ export const speakers = [
     {
       name: "Mary Ayuba",
       title: "Founder Multiwoman Network",
-      image: "/images/mary-ayuba.jpg",
+      image: mary,
       CEO: false,
     },
     {
       name: "Tobe Nnadozie",
       title: "Head Business Tech & Digital Innovation CSCS",
-      image: "/images/tobe-nnadozie.jpg",
+      image: tobe,
       CEO: false,
     },
 ]
