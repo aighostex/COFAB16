@@ -37,7 +37,7 @@ const AdminLogin = () => {
           {error && <p className="text-red-500">{error}</p>}
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
+            className="w-full bg-[#ad3435] text-white py-2 px-4 rounded-md hover:bg-[#ce2e31]"
           >
             Login
           </button>
