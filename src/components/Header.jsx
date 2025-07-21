@@ -23,14 +23,16 @@ const Header = () => {
         <nav className="hidden md:flex space-x-8 text-white">
           <Link to="/" className="font-medium hover:text-black">Home</Link>
           <Link to="/register" className="font-medium hover:text-black">Register</Link>
-          {/* {isAdmin && (
-            <Link to="/dashboard" className="font-medium hover:text-indigo-600">Dashboard</Link>
-          )} */}
-          {!localStorage.getItem('adminAuth') && (
+          
+          {/* {!localStorage.getItem('adminAuth') && (
             <Link to="/admin-login" className="text-sm text-white hover:text-black">
                 Admin
             </Link>
-            )}
+            )} */}
+
+          <Link to="/admin-login" className="font-medium hover:text-black">
+                Admin
+            </Link>
         </nav>
         
         {/* Mobile menu button - visible only on mobile */}
@@ -67,11 +69,14 @@ const Header = () => {
             >
               Register
             </Link>
-            {!localStorage.getItem('adminAuth') && (
+            {/* {!localStorage.getItem('adminAuth') && (
             <Link to="/admin-login" className="text-sm text-white hover:text-black">
                 Admin
             </Link>
-            )}
+            )} */}
+            <Link to="/admin-login" className="font-medium hover:text-black">
+                Admin
+            </Link>
             
           </div>
         </div>

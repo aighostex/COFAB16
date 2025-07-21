@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import axios from 'axios';
+import { getUsers } from '../api/users';
 
 const Dashboard = () => {
   const [registrations, setRegistrations] = useState([]);
@@ -26,12 +27,6 @@ const Dashboard = () => {
     ? Math.round((totalReferrals / totalRegistrations) * 100) 
     : 0;
 
-  // Filter registrations if filter is applied
-//   const filteredRegistrations = filter
-//     ? registrations.filter(reg => 
-//         filter === 'direct' ? !reg.referredBy : reg.referredBy
-//       )
-//     : registrations;
 
 
 
@@ -44,7 +39,13 @@ const Dashboard = () => {
     const fetchData  = async () => {
         setIsLoading(true);
       try {
-        const data = JSON.parse(localStorage.getItem('conferenceRegistrations') || '[]');
+        // // get data from local storage for testing
+        // const storedData = localStorage.getItem('conferenceRegistrations')
+        // const data = storedData ? JSON.parse(storedData) : [];
+        // setRegistrations(data);
+
+        const res = await getUsers('/users');
+        const data = res.data;
         setRegistrations(data);
         
         const referrals = {};
@@ -70,7 +71,8 @@ const Dashboard = () => {
               referrals[referrerCode].referredUsers.push({
                 name: `${reg.firstName} ${reg.lastName}`,
                 email: reg.email,
-                date: new Date(reg.registeredAt).toLocaleDateString()
+                date: new Date(reg.registeredAt).toLocaleDateString(),
+                id: reg.id
               });
             }
           }

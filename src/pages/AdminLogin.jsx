@@ -1,20 +1,47 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import api from '../api/api';
 // import axios from 'axios';
 
+
+
+
 const AdminLogin = () => {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  // // Hardcoded credentials for testing
+  // const HARDCODED_CREDENTIALS = {
+  //   email: 'admin@example.com',
+  //   password: 'admin123' // To be changed when API connection is made
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    if (password === 'admin123') {
-      localStorage.setItem('adminAuth', password);
+
+    // Local validation 
+    // if (email === HARDCODED_CREDENTIALS.email && 
+    //     password === HARDCODED_CREDENTIALS.password) {
+    //   localStorage.setItem('adminAuth', 'dummy-token-for-dev');
+    //   navigate('/dashboard');
+    //   return;
+    // }
+
+    // Original API approach (optional fallback)
+    try {
+      const res = await api.post('/login', { 
+        email, 
+        password 
+      });
+      localStorage.setItem('adminAuth', res.data.token);
       navigate('/dashboard');
-    } else {
-      setError('Invalid admin password');
+    } catch (err) {
+      setError('Invalid admin credentials');
+      console.error('Admin login error:', err);
     }
   };
 
@@ -24,7 +51,18 @@ const AdminLogin = () => {
         <h2 className="text-2xl font-bold mb-4">Admin Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="password" className="block mb-1 font-medium">Admin Password</label>
+            <label htmlFor="username" className="block mb-1 font-medium">Email</label>
+            <input
+              type="text"
+              id="username"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full px-4 py-2 border rounded-md"
+            />
+          </div>
+          <div>
+            <label htmlFor="password" className="block mb-1 font-medium">Password</label>
             <input
               type="password"
               id="password"
@@ -41,6 +79,12 @@ const AdminLogin = () => {
           >
             Login
           </button>
+           {/* <Link 
+          to="/admin-register" 
+          className=""
+        >
+          REGISTER NOW
+        </Link> */}
         </form>
       </div>
     </div>

@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { useEffect } from 'react';
+// import axios from 'axios';
+import { register } from '../api/users';
 // import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
@@ -18,9 +20,32 @@ const Register = () => {
   const [generatedReferralCode, setGeneratedReferralCode] = useState('');
 //   const navigate = useNavigate();
 
-  const generateReferralCode = () => {
-    return `VIP-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
-  };
+
+  const generateReferralLink = (code) => {
+  const baseUrl = window.location.origin;
+  return `${baseUrl}/register?ref=${code}`;
+};
+
+  // const generateReferralCode = () => {
+  //   return `VIP-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+  // };
+
+  // To check for referral codes in the URL
+  useEffect(() => {
+  // Check for referral code in URL parameters
+  const queryParams = new URLSearchParams(window.location.search);
+  const refCode = queryParams.get('ref');
+  
+  if (refCode) {
+    setFormData(prev => ({
+      ...prev,
+      referralCode: refCode
+    }));
+    
+   ;
+  }
+}, []);
+
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -30,47 +55,56 @@ const Register = () => {
     }));
   };
 
-  const findReferrer = (code) => {
-  const registrations = JSON.parse(localStorage.getItem('conferenceRegistrations') || '[]');
-  const referrer = registrations.find(reg => reg.referralCode === code);
-  return referrer ? `${referrer.firstName} ${referrer.lastName}` : 'Unknown';
-};
+//   const findReferrer = (code) => {
+//   const registrations = JSON.parse(localStorage.getItem('conferenceRegistrations') || '[]');
+//   const referrer = registrations.find(reg => reg.referralCode === code);
+//   return referrer ? `${referrer.firstName} ${referrer.lastName}` : 'Unknown';
+// };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError('');
 
+
+    // Generate referral code for new user
+      const referralCode = formData.referralCode || generatedReferralCode();
+      setGeneratedReferralCode(referralCode);
+
     
     
     try {
-      // Generate referral code for new user
-      const referralCode = formData.referralCode || generateReferralCode();
-      setGeneratedReferralCode(referralCode);
+      
 
        // Create the new registration object
-      const newRegistration = {
-        ...formData,
-        referralCode,
-        id: Date.now(),
-        registeredAt: new Date().toISOString(),
-        // referralCode: formData.referralCode || referralCode,
-        referredBy: formData.referralCode ? findReferrer(formData.referralCode) : null,
-        isAdmin: false
-      };
+     const newRegistration = {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            phone: formData.phone,
+            referralCode: referralCode || undefined, // optional field
+        };
 
+      console.log(newRegistration)
 
       //send registration data to backend
-      await axios.post('api/registration', newRegistration);
+      const response = await register('/register', newRegistration);
+      console.log('API request sent')
 
-      setShowSuccess(true);
+      const generatedCodeFromServer = response.data.referralCode;
+      setGeneratedReferralCode(generatedCodeFromServer);
+
+
+
+      
       // Save registration data
       const registrations = JSON.parse(localStorage.getItem('conferenceRegistrations') || '[]');
       registrations.push(newRegistration); // Now properly using newRegistration
       localStorage.setItem('conferenceRegistrations', JSON.stringify(registrations));
       
-      
+      setShowSuccess(true);
     } catch (err) {
+      console.error('API error details', JSON.stringify(err.response?.data, null, 2));
       setError(
         err.response && err.response.data && err.response.data.message 
         ? err.response.data.message 
@@ -204,10 +238,28 @@ const Register = () => {
                 <p className="text-2xl font-bold text-indigo-700 mt-2">
                   {generatedReferralCode}
                 </p>
-                <p className="text-sm text-gray-500 mt-2">
-                  Share this code with friends to earn rewards!
-                </p>
               </div>
+
+          <div className="mt-4">
+            <p className="font-medium">Your Referral Link:</p>
+            <div className="flex items-center mt-2">
+              <input
+                type="text"
+                readOnly
+                value={generateReferralLink(generatedReferralCode)}
+                className="flex-grow p-2 border rounded-l text-sm"
+              />
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(generateReferralLink(generatedReferralCode));
+                  alert('Referral link copied to clipboard!');
+                }}
+                className="bg-indigo-600 text-white p-2 rounded-r hover:bg-indigo-700"
+              >
+                Copy
+              </button>
+            </div>
+          </div>
 
               <div className="mt-6 flex justify-center space-x-4">
                 <button

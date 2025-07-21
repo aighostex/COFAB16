@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import AdminLogin from './pages/AdminLogin';
+import AdminRegister from './pages/adminRegister';
 
 
 function App() { 
@@ -18,6 +19,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path='/admin-register' element={<AdminRegister />} />
             </Routes>
           </main>
           <Footer />
