@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 
-const API_BASAE_URL = import.meta.env.VITE_BASE_URL;
+const API_BASAE_URL = "https://confabevent.chroniclesoft.com/api";
 
 const api = axios.create({
   baseURL: API_BASAE_URL, 

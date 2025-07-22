@@ -1,7 +1,7 @@
 // /src/api/users.js
 import axios from "axios";
 
-const API_URL = "https://your-api-url.com/api";
+const API_URL = "https://confabevent.chroniclesoft.com/api";
 
 //Register (no token required)
 export const register = async (userData) => {

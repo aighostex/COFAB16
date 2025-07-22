@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 // import axios from 'axios';
-import { register } from '../api/users';
+// import { register } from '../api/users';
+import axios from 'axios';
 // import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
@@ -65,11 +66,12 @@ const Register = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setError('');
+    setShowSuccess(false);
 
 
     // Generate referral code for new user
-      const referralCode = formData.referralCode || generatedReferralCode();
-      setGeneratedReferralCode(referralCode);
+      // const referralCode = formData.referralCode;
+      // setGeneratedReferralCode(referralCode);
 
     
     
@@ -81,18 +83,25 @@ const Register = () => {
             firstName: formData.firstName,
             lastName: formData.lastName,
             email: formData.email,
-            phone: formData.phone,
-            referralCode: referralCode || undefined, // optional field
+            phoneNo: formData.phone,
+            // referralCode: referralCode || undefined, // optional field
         };
 
-      console.log(newRegistration)
+        if(formData.referralCode){
+          newRegistration.referredBy = formData.referralCode
+        }
+
+     console.log('Payload being sent:', JSON.stringify(newRegistration, null, 2));
+
 
       //send registration data to backend
-      const response = await register('/register', newRegistration);
-      console.log('API request sent')
+      const response = await axios.post('https://confabevent.chroniclesoft.com/api/register', newRegistration);
+      console.log('API request sent', response.data);
 
-      const generatedCodeFromServer = response.data.referralCode;
+      const generatedCodeFromServer = response.data?.referralCode;
       setGeneratedReferralCode(generatedCodeFromServer);
+
+      localStorage.setItem('referralCode', generatedCodeFromServer);
 
 
 
