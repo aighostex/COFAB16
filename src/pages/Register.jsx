@@ -27,9 +27,6 @@ const Register = () => {
   return `${baseUrl}/register?ref=${code}`;
 };
 
-  // const generateReferralCode = () => {
-  //   return `VIP-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
-  // };
 
   // To check for referral codes in the URL
   useEffect(() => {
@@ -56,12 +53,6 @@ const Register = () => {
     }));
   };
 
-//   const findReferrer = (code) => {
-//   const registrations = JSON.parse(localStorage.getItem('conferenceRegistrations') || '[]');
-//   const referrer = registrations.find(reg => reg.referralCode === code);
-//   return referrer ? `${referrer.firstName} ${referrer.lastName}` : 'Unknown';
-// };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -69,15 +60,8 @@ const Register = () => {
     setShowSuccess(false);
 
 
-    // Generate referral code for new user
-      // const referralCode = formData.referralCode;
-      // setGeneratedReferralCode(referralCode);
 
-    
-    
     try {
-      
-
        // Create the new registration object
      const newRegistration = {
             firstName: formData.firstName,

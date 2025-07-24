@@ -11,8 +11,8 @@ export const register = async (userData) => {
 
 //Get Users (requires token)
 export const getUsers = async () => {
-  const token = localStorage.getItem("token");
-  const response = await axios.get(`${API_URL}`, {
+  const token = localStorage.getItem("adminAuth");
+  const response = await axios.get(`${API_URL}/users`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;

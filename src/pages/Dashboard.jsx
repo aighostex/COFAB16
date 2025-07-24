@@ -17,17 +17,21 @@ const Dashboard = () => {
 
   // Calculate all metrics
   const totalRegistrations = registrations.length;
-  const totalReferrals = registrations.filter(reg => reg.referredBy).length;
+  const totalReferrals = registrations.filter(reg => reg.referral_code).length;
+  
   const uniqueReferrers = new Set(
     registrations
-      .filter(reg => reg.referralCode)
-      .map(reg => reg.referralCode)
+      .filter(reg => reg.referral_code)
+      .map(reg => reg.referral_code)
   ).size;
   const referralRate = totalRegistrations > 0 
     ? Math.round((totalReferrals / totalRegistrations) * 100) 
     : 0;
 
-
+  const getReferrerName = (code) => {
+    const referrer = registrations.find(user => user.my_referral_code === code);
+    return referrer ? `${referrer.first_name} ${referrer.last_name}` : 'Direct Registration';
+  };
 
 
   useEffect(() => {
@@ -39,39 +43,35 @@ const Dashboard = () => {
     const fetchData  = async () => {
         setIsLoading(true);
       try {
-        // // get data from local storage for testing
-        // const storedData = localStorage.getItem('conferenceRegistrations')
-        // const data = storedData ? JSON.parse(storedData) : [];
-        // setRegistrations(data);
 
-        const res = await getUsers('/users');
-        const data = res.data;
-        setRegistrations(data);
+        const data = await getUsers();
+        const sortedData = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        setRegistrations(sortedData);
+        console.log(data)
         
         const referrals = {};
         data.forEach(reg => {
-          if (reg.referralCode) {
-            if (!referrals[reg.referralCode]) {
-              referrals[reg.referralCode] = {
-                code: reg.referralCode,
-                owner: `${reg.firstName} ${reg.lastName}`,
+          if (reg.my_referral_code) {
+            if (!referrals[reg.my_referral_code]) {
+              referrals[reg.my_referral_code] = {
+                code: reg.my_referral_code,
+                owner: `${reg.first_name} ${reg.last_name}`,
                 count: 0,
                 referredUsers: []
               };
             }
-            referrals[reg.referralCode].count++;
+            referrals[reg.my_referral_code].count++;
           }
           
-          if (reg.referredBy) {
-            const referrerCode = data.find(r => 
-              `${r.firstName} ${r.lastName}` === reg.referredBy
-            )?.referralCode;
-            
-            if (referrerCode && referrals[referrerCode]) {
-              referrals[referrerCode].referredUsers.push({
-                name: `${reg.firstName} ${reg.lastName}`,
+          
+          if (reg.referral_code) {
+            const referrer = data.find(r => r.my_referral_code === reg.referral_code);
+            if (referrer && referrals[reg.referral_code]) {
+              referrals[reg.referral_code].count++;
+              referrals[reg.referral_code].referredUsers.push({
+                name: `${reg.first_name} ${reg.last_name}`,
                 email: reg.email,
-                date: new Date(reg.registeredAt).toLocaleDateString(),
+                date: new Date(reg.created_at).toLocaleDateString(),
                 id: reg.id
               });
             }
@@ -322,13 +322,13 @@ const Dashboard = () => {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {currentRegistrations.map((reg, index) => (
                     <tr key={index}>
-                      <td className="px-6 py-4 whitespace-nowrap">{reg.firstName} {reg.lastName}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{reg.first_name} {reg.last_name}</td>
                       <td className="px-6 py-4 whitespace-nowrap">{reg.email}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        {reg.referredBy || 'Direct Registration'}
+                        {reg.referral_code ? getReferrerName(reg.referral_code) : 'Direct Registration'}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        {new Date(reg.registeredAt).toLocaleDateString()}
+                        {new Date(reg.created_at).toLocaleDateString()}
                       </td>
                     </tr>
                   ))}
