@@ -56,7 +56,7 @@ const Dashboard = () => {
               referrals[reg.my_referral_code] = {
                 code: reg.my_referral_code,
                 owner: `${reg.first_name} ${reg.last_name}`,
-                count: 0,
+                count: reg.referral_count,
                 referredUsers: []
               };
             }
