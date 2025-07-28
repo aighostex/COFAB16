@@ -47,7 +47,7 @@ const Dashboard = () => {
         const data = await getUsers();
         const sortedData = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         setRegistrations(sortedData);
-        console.log(data)
+        // console.log(data)
         
         const referrals = {};
         data.forEach(reg => {
@@ -60,10 +60,23 @@ const Dashboard = () => {
                 referredUsers: []
               };
             }
-            referrals[reg.my_referral_code].count++;
+            // referrals[reg.my_referral_code].count++;
           }
           
-          
+          // if (reg.referral_code) {
+          //   const referrerCode = data.find(r.my_referral_code => 
+          //     `${r.first_name} ${r.last_name}` === reg.referral_code
+          //   )?.referral_code;
+            
+          //   if (referrerCode && referrals[referrerCode]) {
+          //     referrals[referrerCode].referredUsers.push({
+          //       name: `${reg.first_name} ${reg.last_name}`,
+          //       email: reg.email,
+          //       date: new Date(reg.created_at).toLocaleDateString(),
+          //       id: reg.id
+          //     });
+          //   }
+          // }
           if (reg.referral_code) {
             const referrer = data.find(r => r.my_referral_code === reg.referral_code);
             if (referrer && referrals[reg.referral_code]) {

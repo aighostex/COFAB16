@@ -68,7 +68,7 @@ const Register = () => {
             lastName: formData.lastName,
             email: formData.email,
             phoneNo: formData.phone,
-            // referralCode: referralCode || undefined, // optional field
+            referralCode: formData.referralCode || null, // optional field
         };
 
         if(formData.referralCode){
