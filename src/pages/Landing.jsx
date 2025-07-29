@@ -4,7 +4,8 @@ import SpeakerCard from '../components/SpeakerCard';
 import { useState } from 'react';
 import confab from '../assets/confab16.svg';
 import Speakers from '../components/Speakers';
-import { Card, CardContent } from "../components/ui/card";
+// import { Card, CardContent } from "../components/ui/card";
+import { Card, CardContent } from '../components/ui/card';
 import {
   Calendar,
   MapPin,
