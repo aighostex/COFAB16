@@ -6,30 +6,29 @@ import api from '../api/api';
 
 
 
-
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // // Hardcoded credentials for testing
-  // const HARDCODED_CREDENTIALS = {
-  //   email: 'admin@example.com',
-  //   password: 'admin123' // To be changed when API connection is made
-  // };
+  // Hardcoded credentials for testing
+  const HARDCODED_CREDENTIALS = {
+    email: 'admin@example.com',
+    password: 'admin123' // To be changed when API connection is made
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    // Local validation 
-    // if (email === HARDCODED_CREDENTIALS.email && 
-    //     password === HARDCODED_CREDENTIALS.password) {
-    //   localStorage.setItem('adminAuth', 'dummy-token-for-dev');
-    //   navigate('/dashboard');
-    //   return;
-    // }
+    //Local validation 
+    if (email === HARDCODED_CREDENTIALS.email && 
+        password === HARDCODED_CREDENTIALS.password) {
+      localStorage.setItem('adminAuth', 'dummy-token-for-dev');
+      navigate('/dashboard');
+      return;
+    }
 
     // Original API approach (optional fallback)
     try {

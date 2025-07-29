@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
-// import axios from 'axios';
+import { ArrowLeft, Users, Gift } from "lucide-react";
+import { Link } from 'react-router-dom';
 // import { register } from '../api/users';
 import axios from 'axios';
 // import { useNavigate } from 'react-router-dom';
@@ -110,9 +111,27 @@ const Register = () => {
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-2xl relative">
-      <h1 className="text-3xl font-bold mb-8 text-center">Conference Registration</h1>
+      <div className="text-center mb-8">
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 text-black hover:text-[#c44513] mb-6 transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to Home
+            </Link>
+
+            <h1 className="text-4xl font-bold mb-4 bg-[#f68f34] bg-clip-text text-transparent">
+              Join the Innovation Revolution
+            </h1>
+            <p className="text-lg text-[#64758b]">
+              Register for Africa's premier innovation conference
+            </p>
+          </div>
       
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6 border-2 border-[#FCEAD7] p-8 rounded-2xl">
+        <div className='flex gap-3'>
+        <Users className="w-6 h-6 text-[#c44513]" /><span>Registration Form</span>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label htmlFor="firstName" className="block mb-1 font-medium">First Name</label>

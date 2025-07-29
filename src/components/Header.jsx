@@ -13,26 +13,30 @@ const Header = () => {
   
 
   return (
-    <header className="bg-[#ce2e31] w-full shadow-sm z-[1000]">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link to="/" className="text-sm flex items-center font-[400] text-white">
-        <img src={confab} alt="confab16" className='h-20 w-20 rounded-full' /><span>CONFERENCE OF <br /> THE FAITHFUL AMBASSADORS</span>
+    <header className="bg-[#1F2E49] w-full shadow-sm fixed z-[1000]">
+      <div className="container mx-auto p-0 py-3 flex justify-between items-center">
+        <Link to="/" className="text-sm flex gap-3 items-center font-[400] text-white">
+        <img src={confab} alt="confab16" className='h-20 w-20 rounded-full' /><span className='text-white font-bold text-2xl'>CONFAB</span>
         </Link>
         
         {/* Desktop Navigation - hidden on mobile */}
-        <nav className="hidden md:flex space-x-8 text-white">
-          <Link to="/" className="font-medium hover:text-black">Home</Link>
-          <Link to="/register" className="font-medium hover:text-black">Register</Link>
-          
-          {/* {!localStorage.getItem('adminAuth') && (
-            <Link to="/admin-login" className="text-sm text-white hover:text-black">
+        <nav className="hidden md:flex items-center space-x-8 text-white">
+          <div className='flex items-center justify-center gap-6 absolute left-[38%]'>
+          <Link to="/" className="font-medium hover:text-[#f97c19]">Home</Link>
+          <Link to="/" className="font-medium hover:text-[#f97c19]">About</Link>
+          <Link to="/" className="font-medium hover:text-[#f97c19]">Why Attend</Link>
+          <Link to="#speakers" className="font-medium hover:text-[#f97c19]">Speakers</Link>
+          <Link to="/admin-login" className="font-medium hover:text-[#f97c19]">
                 Admin
-            </Link>
-            )} */}
-
-          <Link to="/admin-login" className="font-medium hover:text-black">
-                Admin
-            </Link>
+          </Link>
+           
+        </div>
+        <Link 
+          to="/register" 
+          className="bg-[#f97c19] hover:bg-[#db6500] text-white px-8 py-3 rounded-md font-bold text-lg transition-colors inline-block"
+        >
+          REGISTER NOW
+        </Link>
         </nav>
         
         {/* Mobile menu button - visible only on mobile */}
@@ -69,11 +73,6 @@ const Header = () => {
             >
               Register
             </Link>
-            {/* {!localStorage.getItem('adminAuth') && (
-            <Link to="/admin-login" className="text-sm text-white hover:text-black">
-                Admin
-            </Link>
-            )} */}
             <Link to="/admin-login" className="font-medium hover:text-black">
                 Admin
             </Link>
