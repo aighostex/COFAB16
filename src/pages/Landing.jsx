@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import SpeakerCard from '../components/SpeakerCard';
-// import { speakers } from '../constants/speakers';
+// import confab16 from '/src/assets/confab.jpg'
 import { useState } from 'react';
 import confab from '../assets/confab16.svg';
 import Speakers from '../components/Speakers';
@@ -32,7 +32,7 @@ const Landing = () => {
 
 
   return (
-    <div className="bg-[#F0F0f0] pt-10  px-4 py-12 mt-8 ">
+    <div className="bg-[#F0F0f0] pt-10  py-12 mt-8 ">
       {/* Header */}
       <header className="bg-[#1F2E49] w-full shadow-sm fixed z-[1000] left-0 top-0 px-1.5">
             <div className="container mx-auto p-0 py-3 flex justify-between items-center">
@@ -42,11 +42,12 @@ const Landing = () => {
               
               {/* Desktop Navigation - hidden on mobile */}
               <nav className="hidden md:flex items-center space-x-8 text-white">
-                <div className='flex items-center justify-center gap-6 absolute left-[40%]'>
-                <a href="/" className="font-medium hover:text-[#f97c19]">Home</a>
-                {/* <a href="/" className="font-medium hover:text-[#f97c19]">About</a> */}
+                <div className='flex items-center justify-center gap-6 absolute left-[38%]'>
+                <a href="#home" className="font-medium hover:text-[#f97c19]">Home</a>
+                <a href="#about" className="font-medium hover:text-[#f97c19]">About</a>
                 <a href="#attend" className="font-medium hover:text-[#f97c19]">Why Attend</a>
                 <a href="#speakers" className="font-medium hover:text-[#f97c19]">Speakers</a>
+                <a href="#" className="font-medium hover:text-[#f97c19]">Explore</a>
                 {/* <Link to="/admin-login" className="font-medium hover:text-[#f97c19]">
                       Admin
                 </Link> */}
@@ -78,7 +79,7 @@ const Landing = () => {
             
             {/* Mobile menu - appears below header when open */}
             {isMenuOpen && (
-              <div className="md:hidden bg-white py-2 px-4 border-t">
+              <div className="md:hidden bg-white py-4 px-4 border-t ">
                 <div className="flex flex-col space-y-3">
                   <Link 
                     to="/" 
@@ -87,13 +88,13 @@ const Landing = () => {
                   >
                     Home
                   </Link>
-                  {/* <Link 
+                  <Link 
                     to="/" 
                     className="font-medium hover:text-[#ce2e31] py-2"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     About
-                  </Link> */}
+                  </Link>
                   <Link 
                     to="/" 
                     className="font-medium hover:text-[#ce2e31] py-2"
@@ -110,7 +111,7 @@ const Landing = () => {
                   </Link>
                   <Link 
                     to="/register" 
-                    className="font-medium hover:text-[#ce2e31] py-2"
+                    className="font-medium hover:text-[#ce2e31] text-center py-2 border-2 rounded-[8px] inline-block"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Register
@@ -124,26 +125,36 @@ const Landing = () => {
             )}
           </header>
 
-
-      <section className="text-center mb-40 mt-40">
-        <h1 className="text-5xl md:text-7xl font-bold mb-4">
+            {/* Hero section */}
+      <section className="text-center flex items-center justify-center scroll-m-90 bg-[url(/src/assets/confab.jpg)] bg-cover bg-local bg-no-repeat bg-center h-[100vh]" id='home'>
+        <div>
+        <h1 className="text-5xl text-[#f0f0f0] md:text-7xl font-bold mb-4">
           Defining The Future
         </h1>
-        <h2 className="text-3xl md:text-4xl font-bold text-[#cd4547] mb-6">
+        <h2 className=' md:text-2xl text-[#f0f0f0] font-bold mb-4'>Fuel Your Vision. Find Your Tribe. Forge Your Path.</h2>
+        </div>
+      </section>
+
+      {/* about section */}
+      <section className='flex flex-col scroll-m-20 items-center px-6 md:px-0 py-20 bg-[#fafafa]' id='about'>
+        <div className='text-left'>
+        <h2 className='text-left text-5xl text-[#cd4547] font-bold mb-2'>CONFAB16</h2>
+        <h2 className="text-3xl text-left md:text-4xl font-medium text-[#6b6b6b] mb-4">
           THE RISE OF VIPS
         </h2>
+        
         <p className="text-xl mb-8">
           Visionaries, Innovators, Pacesetters and Solution providers
         </p>
-         <p className="text-xl md:text-2xl  text-center mb-8 leading-relaxed max-w-3xl mx-auto">
+         <p className="text-xl md:text-2xl text-justify mb-8 leading-relaxed max-w-3xl mx-auto">
+          <span>The Confab is an organization for godly young professionals, working class, entrepreneurs and every young person who has a big dream. <br /> </span>
           Across the continent, bold thinkers and creators are re-imagining industries, solving local challenges, and setting global trends. From fintech revolutions in Nigeria's Lagos to green energy breakthroughs in Kenya's Nairobi — Africa's innovators are not just participating in the future, they're defining it.
         </p>
-         <p className="text-xl font-semibold mb-8">
-              Join <span className="text-primary font-bold">1000+</span>{" "}
-              solution providers & innovators to imagine the future and create
-              the magic ⚡🌍
-            </p>
         
+         
+        </div>
+
+
         {/* Register Section */}
         <Link 
           to="/register" 
@@ -155,6 +166,7 @@ const Landing = () => {
 
       {/* Time and venue */}
       <section className="py-16 bg-white">
+        <h1 className='text-center mb-10 font-bold text-4xl'>Join Us </h1>
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <Card className="bg-white border-[#f7e5c8] transform hover:scale-105 transition-all">
@@ -180,6 +192,11 @@ const Landing = () => {
             </Card>
           </div>
         </div>
+        <p className="text-xl text-center font-semibold mt-8">
+              Join <span className="text-[#f97c19] font-bold">1000+</span>{" "}
+              solution providers & innovators to imagine the future and create
+              the magic ⚡🌍
+            </p>
       </section>
 
     {/* Features */}

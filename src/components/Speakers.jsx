@@ -4,7 +4,7 @@ import { speakers } from '../constants/speakers';
 
 const Speakers = () => {
   return (
-     <section className="mb-16 mt-16 scroll-m-40" id='speakers'>
+     <section className="mb-16 mt-16 scroll-m-40 px-4 md:px-0" id='speakers'>
         <h1 className="text-6xl font-bold mb-12 text-center">CONFAB SPEAKERS 2025</h1>
 
         {/* CEO Speaker(s) */}
