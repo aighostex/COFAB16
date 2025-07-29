@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 // import axios from 'axios';
 import { getUsers } from '../api/users';
 
@@ -122,6 +123,14 @@ const Dashboard = () => {
 
   return (
     <div className="container mx-auto px-4 py-12">
+      <Link
+        to="/"
+        className="inline-flex items-center gap-2 text-black hover:text-[#c44513] mb-6 transition-colors"
+        >
+        <ArrowLeft className="w-4 h-4" />
+          Back to Home
+        </Link>
+
       <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
       
       
