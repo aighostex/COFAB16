@@ -27,8 +27,10 @@ const Landing = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+
+
   return (
-    <div className="bg-[#F0F0F0] pt-10  px-4 py-12 mt-8 ">
+    <div className="bg-[#F0F0f0] pt-10  px-4 py-12 mt-8 ">
       {/* Header */}
       <header className="bg-[#1F2E49] w-full shadow-sm fixed z-[1000] left-0 top-0 px-1.5">
             <div className="container mx-auto p-0 py-3 flex justify-between items-center">
