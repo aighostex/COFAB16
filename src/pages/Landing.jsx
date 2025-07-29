@@ -5,8 +5,8 @@ import { useState } from 'react';
 import confab from '../assets/confab16.svg';
 import Speakers from '../components/Speakers';
 // import { Card, CardContent } from "../components/ui/card";
-import { Card } from '/src/components/ui/card';
-import { CardContent } from '../components/ui/card';
+import { Card, CardContent } from '/src/components/ui/Card';
+
 import {
   Calendar,
   MapPin,
