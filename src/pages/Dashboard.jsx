@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-// import axios from 'axios';
 import { getUsers } from '../api/users';
 
 const Dashboard = () => {
@@ -61,23 +60,9 @@ const Dashboard = () => {
                 referredUsers: []
               };
             }
-            // referrals[reg.my_referral_code].count++;
           }
           
-          // if (reg.referral_code) {
-          //   const referrerCode = data.find(r.my_referral_code => 
-          //     `${r.first_name} ${r.last_name}` === reg.referral_code
-          //   )?.referral_code;
-            
-          //   if (referrerCode && referrals[referrerCode]) {
-          //     referrals[referrerCode].referredUsers.push({
-          //       name: `${reg.first_name} ${reg.last_name}`,
-          //       email: reg.email,
-          //       date: new Date(reg.created_at).toLocaleDateString(),
-          //       id: reg.id
-          //     });
-          //   }
-          // }
+         
           if (reg.referral_code) {
             const referrer = data.find(r => r.my_referral_code === reg.referral_code);
             if (referrer && referrals[reg.referral_code]) {

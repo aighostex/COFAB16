@@ -1,27 +1,19 @@
 import { Link } from 'react-router-dom';
 import SpeakerCard from '../components/SpeakerCard';
-// import confab16 from '/src/assets/confab.jpg'
 import { useState } from 'react';
 import confab from '../assets/confab16.svg';
 import Speakers from '../components/Speakers';
-// import { Card, CardContent } from "../components/ui/card";
 import { Card, CardContent } from '/src/components/ui/Card';
 
 import {
   Calendar,
   MapPin,
   Users,
-  Rocket,
-  Zap,
   Globe,
-  Clock,
   Star,
 } from "lucide-react";
 
 const Landing = () => {
-    // function classNames (...classes){
-    //     return classes.filter(Boolean).join(" ");
-    // }
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -81,33 +73,39 @@ const Landing = () => {
             {isMenuOpen && (
               <div className="md:hidden bg-white py-4 px-4 border-t ">
                 <div className="flex flex-col space-y-3">
-                  <Link 
-                    to="/" 
+                  <a 
+                    href="#home" 
                     className="font-medium hover:text-[#ce2e31] py-2"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Home
-                  </Link>
-                  <Link 
-                    to="/" 
+                  </a>
+                  <a 
+                    href='#about'
                     className="font-medium hover:text-[#ce2e31] py-2"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     About
-                  </Link>
-                  <Link 
-                    to="/" 
+                  </a>
+                  <a 
+                    href="#attend" 
                     className="font-medium hover:text-[#ce2e31] py-2"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Why Attend
-                  </Link>
-                  <Link 
-                    to="/" 
+                  </a>
+                  <a 
+                    href="#speakers" 
                     className="font-medium hover:text-[#ce2e31] py-2"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Speakers
+                  </a>
+                  <Link 
+                    to="" 
+                    className="font-medium hover:text-[#ce2e31] py-2"
+                  >
+                    Explore
                   </Link>
                   <Link 
                     to="/register" 

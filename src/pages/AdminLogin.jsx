@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import api from '../api/api';
-// import axios from 'axios';
+
 
 
 
@@ -13,22 +13,22 @@ const AdminLogin = () => {
   const navigate = useNavigate();
 
   // Hardcoded credentials for testing
-  const HARDCODED_CREDENTIALS = {
-    email: 'admin@example.com',
-    password: 'admin123' // To be changed when API connection is made
-  };
+  // const HARDCODED_CREDENTIALS = {
+  //   email: 'admin@example.com',
+  //   password: 'admin123' // To be changed when API connection is made
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
     //Local validation 
-    if (email === HARDCODED_CREDENTIALS.email && 
-        password === HARDCODED_CREDENTIALS.password) {
-      localStorage.setItem('adminAuth', 'dummy-token-for-dev');
-      navigate('/dashboard');
-      return;
-    }
+    // if (email === HARDCODED_CREDENTIALS.email && 
+    //     password === HARDCODED_CREDENTIALS.password) {
+    //   localStorage.setItem('adminAuth', 'dummy-token-for-dev');
+    //   navigate('/dashboard');
+    //   return;
+    // }
 
     // Original API approach (optional fallback)
     try {
