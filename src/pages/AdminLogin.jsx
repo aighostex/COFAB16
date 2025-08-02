@@ -37,7 +37,7 @@ const AdminLogin = () => {
         password 
       });
       localStorage.setItem('adminAuth', res.data.token);
-      navigate('/dashboard');
+      navigate('/dashboard', { replace: true });
     } catch (err) {
       setError('Network Error or invalid credentials');
       console.error('Admin login error:', err);

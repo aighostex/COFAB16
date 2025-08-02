@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, LogOut } from 'lucide-react';
 import { getUsers } from '../api/users';
 
 const Dashboard = () => {
@@ -8,7 +8,49 @@ const Dashboard = () => {
   const [referralStats, setReferralStats] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState(null);
+  const [authChecked, setAuthChecked] = useState(false);
   const navigate = useNavigate();
+
+
+
+  // Helper funtion for pagination state
+  // Add these helper functions at the top of your component
+const getPageRange = (currentPage, totalPages) => {
+  const range = [];
+  const maxVisible = 5; // Maximum visible page numbers
+  
+  if (totalPages <= maxVisible) {
+    // Show all pages if there aren't too many
+    for (let i = 1; i <= totalPages; i++) {
+      range.push(i);
+    }
+  } else {
+    // Show limited range with ellipsis
+    const leftOffset = Math.floor(maxVisible / 2);
+    let start = Math.max(1, currentPage - leftOffset);
+    const end = Math.min(totalPages, start + maxVisible - 1);
+    
+    if (end - start + 1 < maxVisible) {
+      start = Math.max(1, end - maxVisible + 1);
+    }
+    
+    for (let i = start; i <= end; i++) {
+      range.push(i);
+    }
+    
+    // Add ellipsis if needed
+    if (start > 1) {
+      range.unshift('...');
+      range.unshift(1);
+    }
+    if (end < totalPages) {
+      range.push('...');
+      range.push(totalPages);
+    }
+  }
+  
+  return range;
+};
 
   // Pagination state
   const [currentRegPage, setCurrentRegPage] = useState(1);
@@ -33,12 +75,27 @@ const Dashboard = () => {
     return referrer ? `${referrer.first_name} ${referrer.last_name}` : 'Direct Registration';
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('adminAuth');
+    navigate('/admin-login'); // Redirect to login page after logout
+  };
 
   useEffect(() => {
-    if (!localStorage.getItem('adminAuth')) {
-      navigate('/');
-      return;
-    }
+    const checkAuth = () => {
+      const authToken = localStorage.getItem('adminAuth');
+      if (!authToken) {
+        navigate('/admin-login', { replace: true });
+        return;
+      }
+      setAuthChecked(true);
+    };
+
+    checkAuth();
+  }, [navigate]);
+
+
+  useEffect(() => {
+    if (!authChecked) return;
 
     const fetchData  = async () => {
         setIsLoading(true);
@@ -88,7 +145,7 @@ const Dashboard = () => {
     };
     
     fetchData();
-  }, [navigate]);
+  }, [authChecked]);
 
   // Get current registrations
   const indexOfLastReg = currentRegPage * itemsPerPage;
@@ -106,8 +163,20 @@ const Dashboard = () => {
   const paginateReg = (pageNumber) => setCurrentRegPage(pageNumber);
   const paginateRef = (pageNumber) => setCurrentRefPage(pageNumber);
 
+   if (!authChecked) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+
   return (
     <div className="container mx-auto px-4 py-12">
+      <div className="flex justify-between items-center mb-6">
       <Link
         to="/"
         className="inline-flex items-center gap-2 text-black hover:text-[#c44513] mb-6 transition-colors"
@@ -115,6 +184,14 @@ const Dashboard = () => {
         <ArrowLeft className="w-4 h-4" />
           Back to Home
         </Link>
+        <button
+          onClick={handleLogout}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-red-100 text-red-700 rounded-md hover:bg-red-200 transition-colors"
+        >
+          <LogOut className="w-4 h-4" />
+          Logout
+        </button>
+        </div>
 
       <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
       
@@ -283,13 +360,18 @@ const Dashboard = () => {
                 Previous
               </button>
               <div className="flex">
-                {Array.from({ length: totalRefPages }, (_, i) => i + 1).map(number => (
+                {getPageRange(currentRefPage, totalRefPages).map((number, index) => (
                   <button
-                    key={number}
-                    onClick={() => paginateRef(number)}
-                    className={`mx-1 px-3 py-1 rounded-md text-sm ${currentRefPage === number ? 'bg-indigo-600 text-white' : 'bg-gray-200'}`}
-                  >
-                    {number}
+                    key={index}
+                    onClick={() => typeof number === 'number' ? paginateRef(number) : null}
+                    className={`mx-1 px-3 py-1 rounded-md text-sm ${currentRefPage === number 
+                      ? 'bg-indigo-600 text-white' 
+                      : typeof number === 'number' 
+                      ? 'bg-gray-200 hover:bg-gray-300' 
+                      : 'cursor-default'
+                     }`}
+                      disabled={number === '...'}>
+                      {number}
                   </button>
                 ))}
               </div>
@@ -351,13 +433,18 @@ const Dashboard = () => {
                 Previous
               </button>
               <div className="flex">
-                {Array.from({ length: totalRegPages }, (_, i) => i + 1).map(number => (
+                {getPageRange(currentRegPage, totalRegPages).map((number, index) => (
                   <button
-                    key={number}
-                    onClick={() => paginateReg(number)}
-                    className={`mx-1 px-3 py-1 rounded-md text-sm ${currentRegPage === number ? 'bg-indigo-600 text-white' : 'bg-gray-200'}`}
-                  >
-                    {number}
+                    key={index}
+                    onClick={() => typeof number === 'number' ? paginateReg(number) : null}
+                    className={`mx-1 px-3 py-1 rounded-md text-sm ${currentRegPage === number 
+                    ? 'bg-indigo-600 text-white' 
+                    : typeof number === 'number' 
+                    ? 'bg-gray-200 hover:bg-gray-300' 
+                    : 'cursor-default'
+                       }`}
+                      disabled={number === '...'}>
+                      {number}
                   </button>
                 ))}
               </div>
