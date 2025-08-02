@@ -12,32 +12,21 @@ const AdminLogin = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Hardcoded credentials for testing
-  // const HARDCODED_CREDENTIALS = {
-  //   email: 'admin@example.com',
-  //   password: 'admin123' // To be changed when API connection is made
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    //Local validation 
-    // if (email === HARDCODED_CREDENTIALS.email && 
-    //     password === HARDCODED_CREDENTIALS.password) {
-    //   localStorage.setItem('adminAuth', 'dummy-token-for-dev');
-    //   navigate('/dashboard');
-    //   return;
-    // }
+    
 
-    // Original API approach (optional fallback)
+    // API call
     try {
       const res = await api.post('/login', { 
         email, 
         password 
       });
       localStorage.setItem('adminAuth', res.data.token);
-      navigate('/dashboard', { replace: true });
+      navigate('/dashboard');
     } catch (err) {
       setError('Network Error or invalid credentials');
       console.error('Admin login error:', err);
