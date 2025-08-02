@@ -14,7 +14,6 @@ const Dashboard = () => {
 
 
   // Helper funtion for pagination state
-  // Add these helper functions at the top of your component
 const getPageRange = (currentPage, totalPages) => {
   const range = [];
   const maxVisible = 5; // Maximum visible page numbers
