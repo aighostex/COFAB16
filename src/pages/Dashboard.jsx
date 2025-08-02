@@ -122,6 +122,7 @@ const getPageRange = (currentPage, totalPages) => {
          
           if (reg.referral_code) {
             const referrer = data.find(r => r.my_referral_code === reg.referral_code);
+            
             if (referrer && referrals[reg.referral_code]) {
               referrals[reg.referral_code].count++;
               referrals[reg.referral_code].referredUsers.push({
@@ -134,7 +135,8 @@ const getPageRange = (currentPage, totalPages) => {
           }
         });
 
-        setReferralStats(Object.values(referrals));
+        const sortedReferralStats = Object.values(referrals).sort((a, b) => b.count - a.count);
+        setReferralStats(Object.values(sortedReferralStats));
 
 
       } catch (error) {
@@ -337,7 +339,6 @@ const getPageRange = (currentPage, totalPages) => {
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referral Code Owner</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referral Code</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referral Count</th>
-                            {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referred Users</th> */}
                         </tr>
                     </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -351,38 +352,50 @@ const getPageRange = (currentPage, totalPages) => {
                 </tbody>
               </table>
             </div>
-            <div className="flex items-center justify-between mt-4">
+            
+            {/* Referral Table Pagination */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 mt-4">
+              {/* Previous Button */}
               <button
                 onClick={() => paginateRef(Math.max(1, currentRefPage - 1))}
                 disabled={currentRefPage === 1}
-                className="px-4 py-2 border rounded-md text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full sm:w-auto px-4 py-2 border rounded-md text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Previous
               </button>
-              <div className="flex">
-                {getPageRange(currentRefPage, totalRefPages).map((number, index) => (
-                  <button
-                    key={index}
-                    onClick={() => typeof number === 'number' ? paginateRef(number) : null}
-                    className={`mx-1 px-3 py-1 rounded-md text-sm ${currentRefPage === number 
-                      ? 'bg-indigo-600 text-white' 
-                      : typeof number === 'number' 
-                      ? 'bg-gray-200 hover:bg-gray-300' 
-                      : 'cursor-default'
-                     }`}
-                      disabled={number === '...'}>
+
+              {/* Page Numbers */}
+              <div className="order-first sm:order-none w-full sm:w-auto overflow-x-auto">
+                <div className="flex justify-center gap-1">
+                  {getPageRange(currentRefPage, totalRefPages).map((number, index) => (
+                    <button
+                      key={index}
+                      onClick={() => typeof number === 'number' ? paginateRef(number) : null}
+                      className={`min-w-[2.25rem] px-2 py-1 rounded-md text-sm ${
+                        currentRefPage === number 
+                          ? 'bg-indigo-600 text-white' 
+                          : typeof number === 'number' 
+                            ? 'bg-gray-200 hover:bg-gray-300' 
+                            : 'cursor-default'
+                      }`}
+                      disabled={number === '...'}
+                    >
                       {number}
-                  </button>
-                ))}
+                    </button>
+                  ))}
+                </div>
               </div>
+
+              {/* Next Button */}
               <button
                 onClick={() => paginateRef(Math.min(totalRefPages, currentRefPage + 1))}
                 disabled={currentRefPage === totalRefPages}
-                className="px-4 py-2 border rounded-md text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full sm:w-auto px-4 py-2 border rounded-md text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Next
               </button>
             </div>
+
           </>
         ) : (
           <p>No referral data available yet.</p>
@@ -398,7 +411,7 @@ const getPageRange = (currentPage, totalPages) => {
             <div className="text-sm text-gray-500 mb-2">
               Showing {indexOfFirstReg + 1}-{Math.min(indexOfLastReg, registrations.length)} of {registrations.length} registrations
             </div>
-            <div className="overflow-x-auto mb-4">
+            <div className="overflow-x-auto mb-4 w-full">
               <table className="min-w-full divide-y divide-gray-200">
                  <thead className="bg-gray-50">
                   <tr>
@@ -424,34 +437,44 @@ const getPageRange = (currentPage, totalPages) => {
                 </tbody>
               </table>
             </div>
-            <div className="flex items-center justify-between mt-4">
+            {/* Pagination Container */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 mt-4">
+              {/* Previous Button - full width on mobile, auto on desktop */}
               <button
                 onClick={() => paginateReg(Math.max(1, currentRegPage - 1))}
                 disabled={currentRegPage === 1}
-                className="px-4 py-2 border rounded-md text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full sm:w-auto px-4 py-2 border rounded-md text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Previous
               </button>
-              <div className="flex">
-                {getPageRange(currentRegPage, totalRegPages).map((number, index) => (
-                  <button
-                    key={index}
-                    onClick={() => typeof number === 'number' ? paginateReg(number) : null}
-                    className={`mx-1 px-3 py-1 rounded-md text-sm ${currentRegPage === number 
-                    ? 'bg-indigo-600 text-white' 
-                    : typeof number === 'number' 
-                    ? 'bg-gray-200 hover:bg-gray-300' 
-                    : 'cursor-default'
-                       }`}
-                      disabled={number === '...'}>
+
+              {/* Page Numbers - centered and scrollable */}
+              <div className="order-first sm:order-none w-full sm:w-auto overflow-x-auto">
+                <div className="flex justify-center gap-1">
+                  {getPageRange(currentRegPage, totalRegPages).map((number, index) => (
+                    <button
+                      key={index}
+                      onClick={() => typeof number === 'number' ? paginateReg(number) : null}
+                      className={`min-w-[2.25rem] px-2 py-1 rounded-md text-sm ${
+                        currentRegPage === number 
+                          ? 'bg-indigo-600 text-white' 
+                          : typeof number === 'number' 
+                            ? 'bg-gray-200 hover:bg-gray-300' 
+                            : 'cursor-default'
+                      }`}
+                      disabled={number === '...'}
+                    >
                       {number}
-                  </button>
-                ))}
+                    </button>
+                  ))}
+                </div>
               </div>
+
+              {/* Next Button - full width on mobile, auto on desktop */}
               <button
                 onClick={() => paginateReg(Math.min(totalRegPages, currentRegPage + 1))}
                 disabled={currentRegPage === totalRegPages}
-                className="px-4 py-2 border rounded-md text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full sm:w-auto px-4 py-2 border rounded-md text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Next
               </button>

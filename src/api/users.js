@@ -1,11 +1,11 @@
 // /src/api/users.js
 import axios from "axios";
 
-const API_URL = "https://confabevent.chroniclesoft.com/api";
+const API_URL = import.meta.env.VITE_API_BASE_URL;;
 
 //Register (no token required)
-export const register = async (userData) => {
-  const response = await axios.post(`${API_URL}/register`, userData);
+export const register = async (newRegistration) => {
+  const response = await axios.post(`${API_URL}/register`, newRegistration);
   return response.data; // { success: true, user: { ... } }
 };
 

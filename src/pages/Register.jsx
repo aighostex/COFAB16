@@ -2,12 +2,18 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { ArrowLeft, Users, Gift } from "lucide-react";
 import { Link } from 'react-router-dom';
+// import { register } from '../api/users';
 import axios from 'axios';
 
 
 
 
 const Register = () => {
+
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
+
+
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -81,7 +87,7 @@ const Register = () => {
 
 
       //send registration data to backend
-      const response = await axios.post('https://confabevent.chroniclesoft.com/api/register', newRegistration);
+      const response = await axios.post(`${API_URL}/register`, newRegistration);
       console.log('API request sent', response.data);
 
       const generatedCodeFromServer = response.data?.referralCode;

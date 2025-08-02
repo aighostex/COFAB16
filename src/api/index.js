@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://confabevent.chroniclesoft.com/api",
+  baseURL: import.meta.env.VITE_API_BASE_URL,
 });
 
 // Add token to every request if available
