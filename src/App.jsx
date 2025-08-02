@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Landing from './pages/Landing';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
@@ -8,8 +8,7 @@ import AdminLogin from './pages/AdminLogin';
 
 
 
-function App() { 
-  const isAuthenticated = !!localStorage.getItem('adminAuth');
+function App() {
 
   return (
     <Router>
@@ -20,7 +19,7 @@ function App() {
               <Route path="/" element={<Landing />} />
               <Route path="/register" element={<Register />} />
               <Route path="/admin-login" element={<AdminLogin />} />
-              <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to='/admin-login'/>} />
+              <Route path="/dashboard" element={<Dashboard /> />} />
              
 
             </Routes>
