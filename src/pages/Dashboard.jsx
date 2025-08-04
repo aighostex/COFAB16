@@ -438,7 +438,6 @@ const getPageRange = (currentPage, totalPages) => {
             </div>
             {/* Pagination Container */}
             <div className="flex flex-col sm:flex-row items-center justify-between gap-2 mt-4">
-              {/* Previous Button - full width on mobile, auto on desktop */}
               <button
                 onClick={() => paginateReg(Math.max(1, currentRegPage - 1))}
                 disabled={currentRegPage === 1}
@@ -468,8 +467,6 @@ const getPageRange = (currentPage, totalPages) => {
                   ))}
                 </div>
               </div>
-
-              {/* Next Button - full width on mobile, auto on desktop */}
               <button
                 onClick={() => paginateReg(Math.min(totalRegPages, currentRegPage + 1))}
                 disabled={currentRegPage === totalRegPages}

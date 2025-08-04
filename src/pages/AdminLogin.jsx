@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import api from '../api/api';
 
@@ -11,6 +11,7 @@ const AdminLogin = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
 
 
   const handleSubmit = async (e) => {
@@ -26,7 +27,11 @@ const AdminLogin = () => {
         password 
       });
       localStorage.setItem('adminAuth', res.data.token);
-      navigate('/dashboard');
+
+
+      const redirectTo = location.state?.from || '/dashboard';
+      navigate(redirectTo, { replace: true });
+
     } catch (err) {
       setError('Network Error or invalid credentials');
       console.error('Admin login error:', err);
